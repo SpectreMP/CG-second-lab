@@ -59,6 +59,13 @@ int WINAPI WinMain(HINSTANCE hInstance,
     /* enable OpenGL for the window */
     EnableOpenGL(hwnd, &hDC, &hRC);
 
+    struct Button menuButton = createButton("I am button!", 200.0f, 50.0f, 20.0f, 20.0f);
+    struct Button prikolButton = createButton("I am another button!", 300.0f, 100.0f, -100.0f, 200.0f);
+
+    struct RGBColor lightBlue = {0.5f, 0.8f, 1.0f};
+    struct RGBColor darkBlue = {0.3f, 0.5f, 0.8f};
+    struct RGBColor orange = {1.0f, 0.5f, 0.2f};
+
     /* program main loop */
     while (!bQuit)
     {
@@ -84,30 +91,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
             glClear(GL_COLOR_BUFFER_BIT);
 
             glPushMatrix();
-                windowNormalize(hwnd, 0.5f);
+                windowNormalize(hwnd, 0.0f);
 
-                //glRotatef(time, 0.0f, 0.0f, 1.0f);
-
-                glBegin(GL_TRIANGLES);
-                    glColor3f(0.0f, 1.0f, 1.0f);
-                    glVertex2f(-220.0f,   -220.0f);
-                    glVertex2f(0.0f,  0.0f);
-                    glVertex2f(220.0f, -220.0f);
-                glEnd();
-
-                glPushMatrix();
-
-                    glBegin(GL_TRIANGLES);
-                        glColor3f(1.0f, 0.0f, 1.0f);
-                        glVertex2f(-120.0f,   -120.0f);
-                        glVertex2f(0.0f,  0.0f);
-                        glVertex2f(120.0f, -120.0f);
-                    glEnd();
-
-                glPopMatrix();
-
-            struct Button menuButton = createButton("A", 10.0f, 10.0f);
-
+                renderButton(menuButton, lightBlue);
+                renderButton(prikolButton, darkBlue);
             glPopMatrix();
 
             SwapBuffers(hDC);
