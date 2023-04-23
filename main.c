@@ -1,12 +1,18 @@
 #include <windows.h>
 #include <gl/gl.h>
-#include "stb-master/stb_easy_font.h"
-#include "header.h"
+#include "menu.h"
 
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
+
+void Init(){
+    Menu_AddButton("Hello", 100, 100, 400, 100, 8);
+    Menu_AddButton("My Name", 100, 250, 400, 100, 8);
+    Menu_AddButton("Is", 100, 400, 400, 100, 8);
+    Menu_AddButton("Giorno", 100, 550, 400, 100, 8);
+}
 
 
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -20,7 +26,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
     HGLRC hRC;
     MSG msg;
     BOOL bQuit = FALSE;
-    float time = 0.0f;
+    float theta = 0.0f;
 
     /* register window class */
     wcex.cbSize = sizeof(WNDCLASSEX);
@@ -59,12 +65,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
     /* enable OpenGL for the window */
     EnableOpenGL(hwnd, &hDC, &hRC);
 
-    struct Button menuButton = createButton("I am button!", 100.0f, 50.0f, 100.0f, 100.0f);
-    struct Button prikolButton = createButton("I am another button!", 300.0f, 100.0f, 0.0f, 0.0f);
+    RECT rct;
+    GetClientRect(hwnd,&rct);
+    glOrtho(0,rct.right, rct.bottom, 0, 1, -1);
 
-    struct RGBColor lightBlue = {0.5f, 0.8f, 1.0f};
-    struct RGBColor darkBlue = {0.3f, 0.5f, 0.8f};
-    struct RGBColor orange = {1.0f, 0.5f, 0.2f};
+    Init();
+
 
     /* program main loop */
     while (!bQuit)
@@ -91,16 +97,15 @@ int WINAPI WinMain(HINSTANCE hInstance,
             glClear(GL_COLOR_BUFFER_BIT);
 
             glPushMatrix();
-                windowNormalize(hwnd, 0.5f);
 
-                renderButton(menuButton, lightBlue);
-                renderButton(prikolButton, darkBlue);
+                Menu_ShowMenu();
+
             glPopMatrix();
 
             SwapBuffers(hDC);
 
-            time += 1.0f;
-            Sleep (1000);
+            theta += 1.0f;
+            Sleep (1);
         }
     }
 
@@ -121,6 +126,18 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             PostQuitMessage(0);
         break;
 
+        case WM_MOUSEMOVE:
+            Menu_MouseMove(LOWORD(lParam), HIWORD(lParam));
+        break;
+
+        case WM_LBUTTONDOWN:
+            Menu_MouseDown();
+        break;
+
+        case WM_LBUTTONUP:
+            Menu_MouseUp();
+        break;
+
         case WM_DESTROY:
             return 0;
 
@@ -131,6 +148,19 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 case VK_ESCAPE:
                     PostQuitMessage(0);
                 break;
+
+                case VK_UP:
+                    printf("up!");
+                break;
+
+                case VK_SPACE:
+                    printf("sheeesh");
+                break;
+
+                case 0x41:
+                    printf("ABOBUS");
+                break;
+
             }
         }
         break;
