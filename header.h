@@ -17,8 +17,7 @@ struct Button {         //Структура кнопки
     float width;
     float x;
     float y;
-
-    void *rawTextVertexBuffer;
+    float textScale;
 
 };
 
@@ -28,7 +27,7 @@ struct RGBColor {       //Структура цвета, чисто для удобства. Скорее всего уже 
     float blue;
 };
 
-struct Button createButton(char theName[31], float theHeight, float theWidth, float positionX, float positionY) {       //Генератор(?) кнопки. Генерирует экземпляр кнопки в соответствии с заданными параметрами
+struct Button createButton(char theName[31], float theHeight, float theWidth, float positionX, float positionY) {   //Генератор(?) кнопки. Генерирует экземпляр кнопки в соответствии с заданными параметрами
     struct Button result;
 
     result.height = theHeight;
@@ -37,11 +36,23 @@ struct Button createButton(char theName[31], float theHeight, float theWidth, fl
     result.x = positionX;
     result.y = positionY;
 
-    //GLuint rawBufferSize = 3000.0f; ТЕКСТ НЕ РАБОТАЕТ!
-
-    //result.rawTextVertexBuffer = malloc(rawBufferSize);
-
     return result;
+}
+
+void print_string(float x, float y, char *text, float r, float g, float b)
+{
+  static char buffer[99999]; // ~500 chars
+  int num_quads;
+
+  num_quads = stb_easy_font_print(x, y, text, NULL, buffer, sizeof(buffer));
+
+  printf("%i", num_quads);
+
+  glColor3f(r,g,b);
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glVertexPointer(2, GL_FLOAT, 16, buffer);
+  glDrawArrays(GL_QUADS, 0, num_quads*4);
+  glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 void renderButton (struct Button button, struct RGBColor color) {               //Рендерер кнопки. Рендерит кнопку каждый кадр, задаёт цвет кнопке
@@ -52,5 +63,7 @@ void renderButton (struct Button button, struct RGBColor color) {               
         glVertex2f(button.x + button.height, button.y + button.width);
         glVertex2f(button.x, button.y + button.width);
     glEnd();
-    //stb_easy_font_print(button.x + button.height * 0.1f, button.y + button.width * 0.1f, button.name, NULL, button.rawTextVertexBuffer, 3000.0f); ДА ЧТО ЖЕ С ТОБОЙ ДЕЛАТЬ
+
+    //stb_easy_font_print(0.0f, 0.0f, button.name, NULL, button.buffer, 99999); //ДА ЧТО ЖЕ С ТОБОЙ ДЕЛАТЬ
+    print_string(button.x, button.y, button.name, 0.0f, 0.0f, 0.0f);
 }

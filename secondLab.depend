@@ -16,3 +16,20 @@
 	<stdio.h>
 	"stb-master/stb_easy_font.h"
 
+1681191590 source:d:\other\cg\cg-second-lab\main.c
+	<windows.h>
+	<gl/gl.h>
+	"stb-master/stb_easy_font.h"
+	"header.h"
+
+1679875298 d:\other\cg\cg-second-lab\stb-master\stb_easy_font.h
+	<stdlib.h>
+	<math.h>
+
+1681191921 d:\other\cg\cg-second-lab\header.h
+	<windows.h>
+	<string.h>
+	<gl/gl.h>
+	<stdio.h>
+	"stb-master/stb_easy_font.h"
+

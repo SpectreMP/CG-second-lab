@@ -47,8 +47,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
                           WS_OVERLAPPEDWINDOW,
                           CW_USEDEFAULT,
                           CW_USEDEFAULT,
-                          1280,
                           1024,
+                          768,
                           NULL,
                           NULL,
                           hInstance,
@@ -59,8 +59,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
     /* enable OpenGL for the window */
     EnableOpenGL(hwnd, &hDC, &hRC);
 
-    struct Button menuButton = createButton("I am button!", 200.0f, 50.0f, 20.0f, 20.0f);
-    struct Button prikolButton = createButton("I am another button!", 300.0f, 100.0f, -100.0f, 200.0f);
+    struct Button menuButton = createButton("I am button!", 100.0f, 50.0f, 100.0f, 100.0f);
+    struct Button prikolButton = createButton("I am another button!", 300.0f, 100.0f, 0.0f, 0.0f);
 
     struct RGBColor lightBlue = {0.5f, 0.8f, 1.0f};
     struct RGBColor darkBlue = {0.3f, 0.5f, 0.8f};
@@ -87,11 +87,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
         {
             /* OpenGL animation code goes here */
 
-            glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             glPushMatrix();
-                windowNormalize(hwnd, 0.0f);
+                windowNormalize(hwnd, 0.5f);
 
                 renderButton(menuButton, lightBlue);
                 renderButton(prikolButton, darkBlue);
@@ -100,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
             SwapBuffers(hDC);
 
             time += 1.0f;
-            Sleep (1);
+            Sleep (1000);
         }
     }
 
