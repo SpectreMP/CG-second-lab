@@ -8,10 +8,10 @@ void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
 
 void Init(){
-    Menu_AddButton("Hello", 100, 100, 400, 100, 8);
-    Menu_AddButton("My Name", 100, 250, 400, 100, 8);
-    Menu_AddButton("Is", 100, 400, 400, 100, 8);
-    Menu_AddButton("Giorno", 100, 550, 400, 100, 8);
+    Menu_AddButton("Hello", 100, 100, 400, 100, 8, speaker);
+    Menu_AddButton("My Name", 100, 250, 400, 100, 8, speaker2);
+    Menu_AddButton("Is", 100, 400, 400, 100, 8, speaker);
+    Menu_AddButton("Giorno", 100, 550, 400, 100, 8, speaker);
 }
 
 
@@ -158,6 +158,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 break;
 
                 case 0x41:
+                case VK_LEFT:
                     printf("ABOBUS");
                 break;
 

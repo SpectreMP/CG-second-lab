@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1682258757 source:d:\other\it\opengl\secondlab\main.c
+1682339661 source:d:\other\it\opengl\secondlab\main.c
 	<windows.h>
 	<gl/gl.h>
 	"menu.h"
@@ -32,12 +32,12 @@
 	<stdio.h>
 	"stb-master/stb_easy_font.h"
 
-1682258598 source:d:\other\it\opengl\secondlab\menu.c
+1682340705 source:d:\other\it\opengl\secondlab\menu.c
 	<gl/gl.h>
 	<stdio.h>
 	<stdlib.h>
 	"stb-master/stb_easy_font.h"
 	"menu.h"
 
-1682251089 d:\other\it\opengl\secondlab\menu.h
+1682339223 d:\other\it\opengl\secondlab\menu.h
 

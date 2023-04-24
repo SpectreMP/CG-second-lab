@@ -36,10 +36,13 @@
 			<Add library="glu32" />
 			<Add library="gdi32" />
 		</Linker>
-		<Unit filename="header.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="menu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="menu.h" />
 		<Unit filename="stb-master/stb_easy_font.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
