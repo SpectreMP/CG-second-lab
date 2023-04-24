@@ -8,7 +8,7 @@ int Menu_MouseMove(float x, float y);
 int Menu_MouseDown();
 void Menu_MouseUp();
 
-void speaker();void speaker2();
+void speaker();
 
 
 #endif

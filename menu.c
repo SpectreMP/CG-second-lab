@@ -7,7 +7,11 @@
 
 #define nameLen 20
 
-typedef struct{
+int btnCnt = 0;
+float mouseX,mouseY;
+
+typedef struct
+{
     char name[nameLen];
     float vert[8];
     char isHower, isDown, isDone;
@@ -17,20 +21,12 @@ typedef struct{
     void (*action)();
 } TBtn;
 
+TBtn *btn = 0;
+
 void speaker()
 {
-    printf("Hello!");
+    printf("Hello!\n");
 }
-
-void speaker2()
-{
-    printf("Prikol");
-}
-
-TBtn *btn = 0;
-int btnCnt = 0;
-
-float mouseX,mouseY;
 
 int Menu_AddButton(char *name, float x, float y, float width, float height, float textScale, void (*buttonAction)())
 {
@@ -54,7 +50,7 @@ int Menu_AddButton(char *name, float x, float y, float width, float height, floa
     b->textPosY += textScale * 2;
     b->textScale = textScale;
 
-    b->action = buttonAction; //Если fun не NULL
+    b->action = buttonAction;
 
     return btnCnt - 1;
 }
@@ -84,11 +80,13 @@ void ShowButton(int buttonId)
         glDisableClientState(GL_VERTEX_ARRAY);
     glPopMatrix();
 
-    if (btn1.isDown & !btn1.isDone) {
+    if (btn1.isDown & !btn1.isDone)
+    {
         btn1.action();
         btn[buttonId].isDone = 1;
     };
 }
+
 void Menu_ShowMenu()
 {
     for (int i = 0; i < btnCnt; i++)
@@ -107,32 +105,37 @@ int Menu_MouseMove(float x, float y)
     mouseY = y;
     int moveBtn = -1;
     for(int i = 0; i < btnCnt; i++)
+    {
         if (isCoordInButton(i, mouseX, mouseY))
-    {
-        btn[i].isHower = 1;
-        moveBtn = i;
-    }
-    else
-    {
-        btn[i].isHower = 0;
-        btn[i].isDown = 0;
+        {
+            btn[i].isHower = 1;
+            moveBtn = i;
+        }
+        else
+        {
+            btn[i].isHower = 0;
+            btn[i].isDown = 0;
+        }
     }
     return moveBtn;
 }
+
 int Menu_MouseDown()
 {
     int downBtn = -1;
     for (int i = 0; i < btnCnt; i++)
         if (isCoordInButton(i, mouseX, mouseY))
-    {
-        btn[i].isDown = 1;
-        downBtn = i;
-    }
+        {
+            btn[i].isDown = 1;
+            downBtn = i;
+        }
     return downBtn;
 }
+
 void Menu_MouseUp()
 {
-    for (int i = 0; i < btnCnt; i++){
+    for (int i = 0; i < btnCnt; i++)
+    {
         btn[i].isDown = 0;
         btn[i].isDone = 0;
     }
