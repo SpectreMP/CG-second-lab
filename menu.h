@@ -1,5 +1,5 @@
-#ifndef MENU_H_INCLUDED
-#define MENU_H_INCLUDED
+#ifndef MENU_H
+#define MENU_H
 
 int Menu_AddButton(char *name, float x, float y, float width, float height, float textScale, void (*fun)());
 void Menu_ShowMenu();
@@ -11,4 +11,4 @@ void Menu_MouseUp();
 void speaker();
 
 
-#endif
+#endif MENU_H

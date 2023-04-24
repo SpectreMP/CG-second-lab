@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <gl/gl.h>
 #include "menu.h"
+#include "texturing.h"
 
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
@@ -12,6 +13,9 @@ void Init(){
     Menu_AddButton("My Name", 100, 250, 400, 100, 8, speaker);
     Menu_AddButton("Is", 100, 400, 400, 100, 8, speaker);
     Menu_AddButton("Giorno", 100, 550, 400, 100, 8, speaker);
+
+
+
 }
 
 
@@ -99,6 +103,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
             glPushMatrix();
 
                 Menu_ShowMenu();
+                texturing("src/spritesheet.png");
+
+                //glDrawElements();
 
             glPopMatrix();
 

@@ -43,7 +43,13 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="menu.h" />
+		<Unit filename="src/spritesheet.png" />
 		<Unit filename="stb-master/stb_easy_font.h" />
+		<Unit filename="stb-master/stb_image.h" />
+		<Unit filename="texturing.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="texturing.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

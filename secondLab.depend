@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1682344434 source:d:\other\it\opengl\secondlab\main.c
+1682360968 source:d:\other\it\opengl\secondlab\main.c
 	<windows.h>
 	<gl/gl.h>
 	"menu.h"
+	"texturing.h"
 
 1674029753 d:\other\it\opengl\secondlab\stb-master\stb_easy_font.h
 	<stdlib.h>
@@ -32,12 +33,39 @@
 	<stdio.h>
 	"stb-master/stb_easy_font.h"
 
-1682340705 source:d:\other\it\opengl\secondlab\menu.c
+1682345446 source:d:\other\it\opengl\secondlab\menu.c
 	<gl/gl.h>
 	<stdio.h>
 	<stdlib.h>
 	"stb-master/stb_easy_font.h"
 	"menu.h"
 
-1682344128 d:\other\it\opengl\secondlab\menu.h
+1682346067 d:\other\it\opengl\secondlab\menu.h
+
+1682360935 source:d:\other\it\opengl\secondlab\texturing.c
+	"texturing.h"
+	<gl/gl.h>
+	<stdio.h>
+	<stdlib.h>
+	"stb-master/stb_image.h"
+
+1682359080 d:\other\it\opengl\secondlab\texturing.h
+	"texturing.h"
+
+1674029753 d:\other\it\opengl\secondlab\stb-master\stb_image.h
+	"stb_image.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+	<math.h>
+	<stdio.h>
+	<assert.h>
+	<stdint.h>
+	<emmintrin.h>
+	<intrin.h>
+	<arm_neon.h>
 
