@@ -14,8 +14,18 @@ void Init(){
     Menu_AddButton("Is", 100, 400, 400, 100, 8, speaker);
     Menu_AddButton("Giorno", 100, 550, 400, 100, 8, speaker);
 
+    unsigned int spriteSheet = createTexture("src/spritesheet.png");
 
+    float vertices[] = {
+        // positions          // colors           // texture coords
+         600.0f,  600.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+         600.0f,  300.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+         300.0f,  300.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+         300.0f,  600.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
+    };
 
+    //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    //glEnableVertexAttribArray(2);
 }
 
 
@@ -103,7 +113,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
             glPushMatrix();
 
                 Menu_ShowMenu();
-                texturing("src/spritesheet.png");
+
+                glBegin(GL_TRIANGLES);
+
+                glEnd();
 
                 //glDrawElements();
 

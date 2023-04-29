@@ -16,11 +16,11 @@
 	<stdio.h>
 	"stb-master/stb_easy_font.h"
 
-1681191590 source:d:\other\cg\cg-second-lab\main.c
+1682654776 source:d:\other\cg\cg-second-lab\main.c
 	<windows.h>
 	<gl/gl.h>
-	"stb-master/stb_easy_font.h"
-	"header.h"
+	"menu.h"
+	"texturing.h"
 
 1679875298 d:\other\cg\cg-second-lab\stb-master\stb_easy_font.h
 	<stdlib.h>
@@ -53,6 +53,42 @@
 	"texturing.h"
 
 1674029753 d:\other\it\opengl\secondlab\stb-master\stb_image.h
+	"stb_image.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<stddef.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+	<math.h>
+	<stdio.h>
+	<assert.h>
+	<stdint.h>
+	<emmintrin.h>
+	<intrin.h>
+	<arm_neon.h>
+
+1682651346 d:\other\cg\cg-second-lab\menu.h
+
+1682654585 d:\other\cg\cg-second-lab\texturing.h
+	"texturing.h"
+
+1682651346 source:d:\other\cg\cg-second-lab\menu.c
+	<gl/gl.h>
+	<stdio.h>
+	<stdlib.h>
+	"stb-master/stb_easy_font.h"
+	"menu.h"
+
+1682654577 source:d:\other\cg\cg-second-lab\texturing.c
+	"texturing.h"
+	<gl/gl.h>
+	<stdio.h>
+	<stdlib.h>
+	"stb-master/stb_image.h"
+
+1679875298 d:\other\cg\cg-second-lab\stb-master\stb_image.h
 	"stb_image.h"
 	<stdio.h>
 	<stdlib.h>
