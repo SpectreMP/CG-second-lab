@@ -15,14 +15,10 @@ void Init(){
     Menu_AddButton("Giorno", 100, 550, 400, 100, 8, speaker);
 
     unsigned int spriteSheet = createTexture("src/spritesheet.png");
+    glBindTexture(GL_TEXTURE_2D, spriteSheet);
 
-    float vertices[] = {
-        // positions          // colors           // texture coords
-         600.0f,  600.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-         600.0f,  300.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-         300.0f,  300.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-         300.0f,  600.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
-    };
+
+
 
     //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     //glEnableVertexAttribArray(2);
@@ -79,9 +75,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
     /* enable OpenGL for the window */
     EnableOpenGL(hwnd, &hDC, &hRC);
 
-    RECT rct;
-    GetClientRect(hwnd,&rct);
-    glOrtho(0,rct.right, rct.bottom, 0, 1, -1);
+    //RECT rct;
+    //GetClientRect(hwnd,&rct);
+    //glOrtho(0,rct.right, rct.bottom, 0, 1, -1);
+
+    float vertices[] = {
+        // positions          // colors           // texture coords
+         1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+         1.0f,  0.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+         0.0f,  0.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+         0.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
+    };
 
     Init();
 
@@ -117,6 +121,16 @@ int WINAPI WinMain(HINSTANCE hInstance,
                 glBegin(GL_TRIANGLES);
 
                 glEnd();
+
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+                glVertexPointer(2, GL_FLOAT, 8 * sizeof(float), vertices);
+                glTexCoordPointer(2, GL_FLOAT, 8 * sizeof(float), vertices);
+                glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+                glDisableClientState(GL_VERTEX_ARRAY);
+                glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
                 //glDrawElements();
 

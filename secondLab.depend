@@ -16,7 +16,7 @@
 	<stdio.h>
 	"stb-master/stb_easy_font.h"
 
-1682654776 source:d:\other\cg\cg-second-lab\main.c
+1682856196 source:d:\other\cg\cg-second-lab\main.c
 	<windows.h>
 	<gl/gl.h>
 	"menu.h"
@@ -81,7 +81,7 @@
 	"stb-master/stb_easy_font.h"
 	"menu.h"
 
-1682654577 source:d:\other\cg\cg-second-lab\texturing.c
+1682855658 source:d:\other\cg\cg-second-lab\texturing.c
 	"texturing.h"
 	<gl/gl.h>
 	<stdio.h>
