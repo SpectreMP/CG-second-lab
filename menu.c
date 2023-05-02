@@ -78,6 +78,7 @@ void ShowButton(int buttonId)
             glVertexPointer(2, GL_FLOAT, 16, btn1.buffer);
             glDrawArrays(GL_QUADS, 0, btn1.num_quads*4);
         glDisableClientState(GL_VERTEX_ARRAY);
+        glColor3f(1.0f, 1.0f, 1.0f);
     glPopMatrix();
 
     if (btn1.isDown & !btn1.isDone)

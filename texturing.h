@@ -2,7 +2,7 @@
 #define TEXTURING_H
 #include "texturing.h"
 
-unsigned int createTexture(char* path);
+void createTexture(char* path, unsigned int *texture);
 
 
 #endif TEXTURING_H
