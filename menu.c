@@ -90,8 +90,10 @@ void ShowButton(int buttonId)
 
 void Menu_ShowMenu()
 {
-    for (int i = 0; i < btnCnt; i++)
-        ShowButton(i);
+    glPushMatrix();
+        for (int i = 0; i < btnCnt; i++)
+            ShowButton(i);
+    glPopMatrix();
 }
 
 char isCoordInButton(int buttonId, float x, float y)

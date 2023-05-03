@@ -3,6 +3,7 @@
 #include "menu.h"
 #include "texturing.h"
 
+float ADD_FRAMETIME = 5.0f;
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
@@ -13,13 +14,6 @@ void Init(){
     Menu_AddButton("My Name", 100, 250, 400, 100, 8, speaker);
     Menu_AddButton("Is", 100, 400, 400, 100, 8, speaker);
     Menu_AddButton("Giorno", 100, 550, 400, 100, 8, speaker);
-
-    //unsigned int spriteSheet = createTexture("src/spritesheet.png");
-    //glBindTexture(GL_TEXTURE_2D, spriteSheet);
-
-
-    //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    //glEnableVertexAttribArray(2);
 }
 
 
@@ -77,17 +71,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
     GetClientRect(hwnd,&rct);
     glOrtho(0,rct.right, rct.bottom, 0, 1, -1);
 
-    float vertices[] = {
-        // positions          // colors           // texture coords
-         400.0f,  400.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-         400.0f,  200.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-         200.0f,  200.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-         200.0f,  400.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
-    };
 
 
-    unsigned int spriteSheet;
+
+    unsigned int spriteSheet, background;
     createTexture("src/spritesheet.png", &spriteSheet);
+    createTexture("src/background.png", &background);
 
     Init();
 
@@ -116,42 +105,16 @@ int WINAPI WinMain(HINSTANCE hInstance,
             glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            glPushMatrix();
+            renderImage(1024.0f, 768.0f, 0, 0, background);
 
-                Menu_ShowMenu();
+            Menu_ShowMenu();
 
-                glBegin(GL_TRIANGLES);
-
-                glEnd();
-
-            glPopMatrix();
-
-
-            glEnable(GL_TEXTURE_2D);
-            glBindTexture(GL_TEXTURE_2D, spriteSheet);
-            glEnable(GL_ALPHA_TEST);
-            glAlphaFunc(GL_GREATER, 0.5);
-
-            glPushMatrix();
-
-
-                glEnableClientState(GL_VERTEX_ARRAY);
-                glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-                glVertexPointer(2, GL_FLOAT, 8 * sizeof(float), vertices);
-                glTexCoordPointer(2, GL_FLOAT, 8 * sizeof(float), vertices + 6);
-                glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-                glDisableClientState(GL_VERTEX_ARRAY);
-                glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-                glDisable(GL_ALPHA_TEST);
-
-            glPopMatrix();
+            renderImage(640.0f, 240.0f, 400.0f, 100.0f, spriteSheet);
 
             SwapBuffers(hDC);
 
             theta += 1.0f;
-            Sleep (1);
+            Sleep (1 + ADD_FRAMETIME);
         }
     }
 
