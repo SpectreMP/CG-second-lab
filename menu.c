@@ -26,6 +26,7 @@ TBtn *btn = 0;
 void speaker()
 {
     printf("Hello!\n");
+    PostQuitMessage(0);
 }
 
 int Menu_AddButton(char *name, float x, float y, float width, float height, float textScale, void (*buttonAction)())

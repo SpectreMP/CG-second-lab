@@ -16,11 +16,12 @@
 	<stdio.h>
 	"stb-master/stb_easy_font.h"
 
-1683089342 source:d:\other\cg\cg-second-lab\main.c
+1683116896 source:d:\other\cg\cg-second-lab\main.c
 	<windows.h>
 	<gl/gl.h>
 	"menu.h"
 	"texturing.h"
+	"character.h"
 
 1679875298 d:\other\cg\cg-second-lab\stb-master\stb_easy_font.h
 	<stdlib.h>
@@ -71,17 +72,17 @@
 
 1682651346 d:\other\cg\cg-second-lab\menu.h
 
-1683086567 d:\other\cg\cg-second-lab\texturing.h
+1683116150 d:\other\cg\cg-second-lab\texturing.h
 	"texturing.h"
 
-1683087786 source:d:\other\cg\cg-second-lab\menu.c
+1683116919 source:d:\other\cg\cg-second-lab\menu.c
 	<gl/gl.h>
 	<stdio.h>
 	<stdlib.h>
 	"stb-master/stb_easy_font.h"
 	"menu.h"
 
-1683089410 source:d:\other\cg\cg-second-lab\texturing.c
+1683115989 source:d:\other\cg\cg-second-lab\texturing.c
 	"texturing.h"
 	<gl/gl.h>
 	<stdio.h>
@@ -104,4 +105,14 @@
 	<emmintrin.h>
 	<intrin.h>
 	<arm_neon.h>
+
+1683091878 source:d:\other\cg\cg-second-lab\animation.c
+
+1683116101 source:d:\other\cg\cg-second-lab\character.c
+	<GL/gl.h>
+	"character.h"
+	"texturing.h"
+	<stdbool.h>
+
+1683096021 d:\other\cg\cg-second-lab\character.h
 

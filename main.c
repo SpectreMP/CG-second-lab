@@ -2,6 +2,7 @@
 #include <gl/gl.h>
 #include "menu.h"
 #include "texturing.h"
+#include "character.h"
 
 float ADD_FRAMETIME = 5.0f;
 
@@ -101,9 +102,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
         else
         {
             /* OpenGL animation code goes here */
-
-            glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
 
             renderImage(1024.0f, 768.0f, 0, 0, background);
 

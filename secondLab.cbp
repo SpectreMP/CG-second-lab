@@ -36,6 +36,10 @@
 			<Add library="glu32" />
 			<Add library="gdi32" />
 		</Linker>
+		<Unit filename="character.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="character.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
