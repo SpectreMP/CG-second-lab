@@ -23,11 +23,6 @@ typedef struct
 
 TBtn *btn = 0;
 
-void speaker()
-{
-    printf("Hello!\n");
-    PostQuitMessage(0);
-}
 
 int Menu_AddButton(char *name, float x, float y, float width, float height, float textScale, void (*buttonAction)())
 {
@@ -144,3 +139,4 @@ void Menu_MouseUp()
         btn[i].isDone = 0;
     }
 }
+

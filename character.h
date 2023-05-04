@@ -15,7 +15,7 @@ typedef struct
     bool turnedAround;
     bool inAir;
 
-    unsigned int* spritesheet;
+    unsigned int spritesheet;
 
     int animation;
     int frame;
@@ -25,7 +25,7 @@ typedef struct
 
 } Character;
 
-Character* createCharacter(float x, float y, unsigned int* sprite);
+Character* createCharacter(float x, float y, unsigned int sprite);
 void drawCharacter(Character *ch);
 void changeAnimation (Character *ch, int animationNumber);
 void addVelocity(Character *ch, float horizontal, float vertical);

@@ -16,7 +16,7 @@
 	<stdio.h>
 	"stb-master/stb_easy_font.h"
 
-1683206981 source:d:\other\cg\cg-second-lab\main.c
+1683213514 source:d:\other\cg\cg-second-lab\main.c
 	<windows.h>
 	<gl/gl.h>
 	"menu.h"
@@ -70,12 +70,12 @@
 	<intrin.h>
 	<arm_neon.h>
 
-1682651346 d:\other\cg\cg-second-lab\menu.h
+1683212628 d:\other\cg\cg-second-lab\menu.h
 
 1683116150 d:\other\cg\cg-second-lab\texturing.h
 	"texturing.h"
 
-1683116919 source:d:\other\cg\cg-second-lab\menu.c
+1683212480 source:d:\other\cg\cg-second-lab\menu.c
 	<gl/gl.h>
 	<stdio.h>
 	<stdlib.h>
@@ -108,12 +108,12 @@
 
 1683091878 source:d:\other\cg\cg-second-lab\animation.c
 
-1683206903 source:d:\other\cg\cg-second-lab\character.c
+1683212752 source:d:\other\cg\cg-second-lab\character.c
 	<GL/gl.h>
 	"character.h"
 	"texturing.h"
 	<stdbool.h>
 
-1683199859 d:\other\cg\cg-second-lab\character.h
+1683209114 d:\other\cg\cg-second-lab\character.h
 	<stdbool.h>
 

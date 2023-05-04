@@ -4,18 +4,14 @@
 #include "texturing.h"
 #include "character.h"
 
-float ADD_FRAMETIME = 40.0f;
+float ADD_FRAMETIME = 50.0f;
+int SCENE = 0;
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
 
-void Init(){
-    Menu_AddButton("Hello", 100, 100, 400, 100, 8, speaker);
-    Menu_AddButton("My Name", 100, 250, 400, 100, 8, speaker);
-    Menu_AddButton("Is", 100, 400, 400, 100, 8, speaker);
-    Menu_AddButton("Giorno", 100, 550, 400, 100, 8, speaker);
-}
+void changeScene();
 
 
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -73,14 +69,19 @@ int WINAPI WinMain(HINSTANCE hInstance,
     GetClientRect(hwnd,&rct);
     glOrtho(0,rct.right, rct.bottom, 0, 1, -1);
 
+    //Инициализация кнопок
+    Menu_AddButton("Start", 100, 100, 400, 100, 8, changeScene);
+    Menu_AddButton("Quit", 100, 250, 400, 100, 8, PostQuitMessage);         //По хорошему так завершать программу не стоит, но я не хочу писать отдельную функцию, только для того чтобы завершить программу с кодом 0
+
+    //Инициализация текстур
     unsigned int spriteSheet, background, wall;
     createTexture("src/spritesheet.png", &spriteSheet);
     createTexture("src/background.png", &background);
     createTexture("src/brick.png", &wall);
 
+    //Инициализация персонажей
     Character* mainCharacter = createCharacter(400.0f, 400.0f, spriteSheet);
 
-    Init();
 
     /* program main loop */
     while (!bQuit)
@@ -105,44 +106,19 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
             renderImage(1024.0f, 768.0f, 0, 0, background);
 
-            Menu_ShowMenu();
-
-            renderImage(100.0f, 100.0f, 200.0f, 200.0f, wall);
-
-            drawCharacter(mainCharacter);
-            drawVelocityVector(mainCharacter);
-
-
-            if (mainCharacter->inAir)
+            switch(SCENE)
             {
-                changeAnimation(mainCharacter, 1);
-            }
-            else if (GetKeyState(VK_LEFT)<0)
-            {
-                addVelocity(mainCharacter, -10.0f, 0.0f);
-                mainCharacter -> turnedAround = true;
-                changeAnimation(mainCharacter, 2);
+            case 0:
+                Menu_ShowMenu();
+                break;
+            case 1:
+                renderImage(100.0f, 100.0f, 200.0f, 200.0f, wall);
 
-            }
-            else if(GetKeyState(VK_RIGHT)<0)
-            {
-                addVelocity(mainCharacter, 10.0f, 0.0f);
-                mainCharacter -> turnedAround = false;
-                changeAnimation(mainCharacter, 2);
-            }
-            else
-            {
-                changeAnimation(mainCharacter, 3);
-            }
+                drawCharacter(mainCharacter);
+                drawVelocityVector(mainCharacter);
 
-            if (GetKeyState(VK_UP)<0 && mainCharacter->inAir != true)
-            {
-                addVelocity(mainCharacter, 0.0f, 70.0f);
-                mainCharacter -> inAir = true;
-            }
-            if (GetKeyState(VK_DOWN)<0 && mainCharacter->inAir)
-            {
-                addVelocity(mainCharacter, 0.0f, -100.0f);
+                playerControl(mainCharacter);
+                break;
             }
 
             SwapBuffers(hDC);
@@ -190,7 +166,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             switch (wParam)
             {
                 case VK_ESCAPE:
-                    PostQuitMessage(0);
+                    changeScene();
                 break;
             }
         }
@@ -239,5 +215,17 @@ void DisableOpenGL (HWND hwnd, HDC hDC, HGLRC hRC)
     wglMakeCurrent(NULL, NULL);
     wglDeleteContext(hRC);
     ReleaseDC(hwnd, hDC);
+}
+
+void changeScene()          //Совсем маленький костыль, жесть
+{
+    if (SCENE)
+    {
+        SCENE = 0;
+    }
+    else
+    {
+        SCENE = 1;
+    }
 }
 

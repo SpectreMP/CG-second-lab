@@ -3,10 +3,10 @@
 #include "texturing.h"
 #include <stdbool.h>
 
-int WINDOW_HEIGHT = 768; //Самый большой костыль всех времен
+int WINDOW_HEIGHT = 768; //Самый большой костыль всех времен (я не могу развернуть ориентацию пространства для отрисовки конкретного персонажа)
 float FLOOR_LEVEL = 200; //Костыль поменьше
 
-Character* createCharacter(float x, float y, unsigned int* sprite)
+Character* createCharacter(float x, float y, unsigned int sprite)
 {
     Character* ch = malloc(sizeof(Character));
 
@@ -28,31 +28,30 @@ Character* createCharacter(float x, float y, unsigned int* sprite)
 void drawCharacter(Character *ch)
 {
     float positionXTransformed = ch -> positionX - ch -> width * 0.5f;
-    float positionYTransformed = 768 - ch -> positionY - ch -> height;
+    float positionYTransformed = WINDOW_HEIGHT - ch -> positionY - ch -> height;
 
     float vertices[] = {
-         // positions                                                   // colors           // texture coords
+         // positions                                                                 // colors           // texture coords
          positionXTransformed + ch->width, positionYTransformed + ch->height, 0.0f,   1.0f, 1.0f, 1.0f,   0.125f + 0.125f * ch->frame, 0.33333f * ch->animation,         // top right
          positionXTransformed + ch->width, positionYTransformed,              0.0f,   1.0f, 1.0f, 1.0f,   0.125 + 0.125f * ch->frame,  0.33333f * (ch->animation - 1),   // bottom right
          positionXTransformed,             positionYTransformed,              0.0f,   1.0f, 1.0f, 1.0f,   0.0f + 0.125f * ch->frame,   0.33333f * (ch->animation - 1),   // bottom left
          positionXTransformed,             positionYTransformed + ch->height, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f + 0.125f * ch->frame,   0.33333f * ch->animation          // top left
     };
 
-    if (ch->turnedAround) //Отражаем изображение по вертикали
+    if (ch->turnedAround)                                   //Отражаем изображение по вертикали
     {
         vertices[0] = vertices [8] -= ch -> width;
         vertices[16] = vertices [24] += ch -> width;
     }
 
-    renderImageFromMatrix(vertices, ch->spritesheet);
+    physics(ch);                                            //Обрабатываем физику
 
-    physics(ch);
+    renderImageFromMatrix(vertices, ch->spritesheet);       //Рендерим персонажа в соответствии с матрицей вершин выше
 
-    printf("%f %f\n", ch->positionX, ch->positionY);
-    ch->frame += 1;                   //Переключаем кадр анимации на следующий
+    ch->frame += 1;                                         //Переключаем кадр анимации на следующий
 }
 
-void changeAnimation (Character *ch, int animationNumber)
+void changeAnimation (Character *ch, int animationNumber)   //Обработка переключения анимации
 {
     if (ch->animation != animationNumber)
     {
@@ -67,19 +66,19 @@ void addVelocity(Character *ch, float horizontal, float vertical)
     ch->velocityY += vertical;
 }
 
-void physics(Character *ch)
+void physics(Character *ch)                 //Физичность? Персонажа
 {
-    if (ch->inAir)
+    if (ch->inAir)                          //Ускорение свободного падения (Игра происходит в вакууме, канон)
     {
         ch->velocityY -= 9.8f;
     }
     else
     {
-        ch->velocityX *= 0.8f;            //Инертность?
+        ch->velocityX *= 0.8f;              //Инертность?
         ch->velocityY *= 0.8f;
     }
 
-    ch->positionX += ch->velocityX;   //Преобразуем скорость в изменение координат
+    ch->positionX += ch->velocityX;         //Преобразуем скорость в изменение координат
     ch->positionY += ch->velocityY;
 
 
@@ -91,7 +90,7 @@ void physics(Character *ch)
     }
 }
 
-void drawVelocityVector (Character *ch)
+void drawVelocityVector (Character *ch)     //Отрисовать вектор скорости персонажа
 {
     glPushMatrix();
         glBegin(GL_LINES);
@@ -101,3 +100,37 @@ void drawVelocityVector (Character *ch)
     glPopMatrix();
 }
 
+void playerControl (Character *ch)          //Управление персонажем (как бы я хотел реализовать его на switch...)
+{
+    if (ch->inAir)
+    {
+        changeAnimation(ch, 1);
+    }
+    else if (GetKeyState(VK_LEFT)<0)
+    {
+        addVelocity(ch, -10.0f, 0.0f);
+        ch -> turnedAround = true;
+        changeAnimation(ch, 2);
+
+    }
+    else if(GetKeyState(VK_RIGHT)<0)
+    {
+        addVelocity(ch, 10.0f, 0.0f);
+        ch -> turnedAround = false;
+        changeAnimation(ch, 2);
+    }
+    else
+    {
+        changeAnimation(ch, 3);
+    }
+
+    if (GetKeyState(VK_UP)<0 && ch->inAir != true)
+    {
+        addVelocity(ch, 0.0f, 70.0f);
+        ch -> inAir = true;
+    }
+    if (GetKeyState(VK_DOWN)<0 && ch->inAir)
+    {
+        addVelocity(ch, 0.0f, -100.0f);
+    }
+}
