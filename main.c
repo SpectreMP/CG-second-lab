@@ -4,7 +4,7 @@
 #include "texturing.h"
 #include "character.h"
 
-float ADD_FRAMETIME = 5.0f;
+float ADD_FRAMETIME = 60.0f;
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
@@ -15,6 +15,7 @@ void Init(){
     Menu_AddButton("My Name", 100, 250, 400, 100, 8, speaker);
     Menu_AddButton("Is", 100, 400, 400, 100, 8, speaker);
     Menu_AddButton("Giorno", 100, 550, 400, 100, 8, speaker);
+    //Character* mainCharacter = createCharacter(300.0f, 300.0f, spritesheet);
 }
 
 
@@ -72,15 +73,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
     GetClientRect(hwnd,&rct);
     glOrtho(0,rct.right, rct.bottom, 0, 1, -1);
 
-
-
-
-    unsigned int spriteSheet, background;
+    unsigned int spriteSheet, background, wall;
     createTexture("src/spritesheet.png", &spriteSheet);
     createTexture("src/background.png", &background);
+    createTexture("src/brick.png", &wall);
+
+    Character* mainCharacter = createCharacter(400.0f, 400.0f, spriteSheet);
 
     Init();
-
 
     /* program main loop */
     while (!bQuit)
@@ -107,12 +107,49 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
             Menu_ShowMenu();
 
-            renderImage(640.0f, 240.0f, 400.0f, 100.0f, spriteSheet);
+            float xPosition = 500.0f;
+            float yPosition = 500.0f;
+            float width = 100.0f;
+            float height = 100.0f;
+            float animationNumber = 2.0f;
+
+            float vertices[] = {
+                 // positions                                   // colors           // texture coords
+                 xPosition + width, yPosition + height, 0.0f,   1.0f, 1.0f, 1.0f,   0.125f+0.125f*theta, 0.333f * animationNumber,             // top right
+                 xPosition + width, yPosition,          0.0f,   1.0f, 1.0f, 1.0f,   0.125+0.125f*theta,  0.333f * (animationNumber - 1.0f),    // bottom right
+                 xPosition,         yPosition,          0.0f,   1.0f, 1.0f, 1.0f,   0.0f+0.125f*theta,   0.333f * (animationNumber - 1.0f),    // bottom left
+                 xPosition,         yPosition + height, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f+0.125f*theta,   0.333f * animationNumber              // top left
+            };
+
+
+            renderImage(100.0f, 100.0f, 200.0f, 200.0f, wall);
+
+            drawCharacter(mainCharacter);
+
+            if (GetKeyState(VK_LEFT)<0)
+            {
+                addVelocity(mainCharacter, -10.0f, 0.0f);
+                mainCharacter -> turnedAround = true;
+            }
+            if (GetKeyState(VK_RIGHT)<0)
+            {
+                addVelocity(mainCharacter, 10.0f, 0.0f);
+                mainCharacter -> turnedAround = false;
+            }
+            if (GetKeyState(VK_UP)<0)
+            {
+                addVelocity(mainCharacter, 0.0f, 10.0f);
+            }
+            if (GetKeyState(VK_DOWN)<0)
+            {
+                addVelocity(mainCharacter, 0.0f, -10.0f);
+            }
 
             SwapBuffers(hDC);
 
             theta += 1.0f;
             Sleep (1 + ADD_FRAMETIME);
+
         }
     }
 
