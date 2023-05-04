@@ -4,7 +4,7 @@
 #include "texturing.h"
 #include "character.h"
 
-float ADD_FRAMETIME = 60.0f;
+float ADD_FRAMETIME = 40.0f;
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
@@ -15,7 +15,6 @@ void Init(){
     Menu_AddButton("My Name", 100, 250, 400, 100, 8, speaker);
     Menu_AddButton("Is", 100, 400, 400, 100, 8, speaker);
     Menu_AddButton("Giorno", 100, 550, 400, 100, 8, speaker);
-    //Character* mainCharacter = createCharacter(300.0f, 300.0f, spritesheet);
 }
 
 
@@ -66,6 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
     ShowWindow(hwnd, nCmdShow);
 
+
     /* enable OpenGL for the window */
     EnableOpenGL(hwnd, &hDC, &hRC);
 
@@ -107,42 +107,42 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
             Menu_ShowMenu();
 
-            float xPosition = 500.0f;
-            float yPosition = 500.0f;
-            float width = 100.0f;
-            float height = 100.0f;
-            float animationNumber = 2.0f;
-
-            float vertices[] = {
-                 // positions                                   // colors           // texture coords
-                 xPosition + width, yPosition + height, 0.0f,   1.0f, 1.0f, 1.0f,   0.125f+0.125f*theta, 0.333f * animationNumber,             // top right
-                 xPosition + width, yPosition,          0.0f,   1.0f, 1.0f, 1.0f,   0.125+0.125f*theta,  0.333f * (animationNumber - 1.0f),    // bottom right
-                 xPosition,         yPosition,          0.0f,   1.0f, 1.0f, 1.0f,   0.0f+0.125f*theta,   0.333f * (animationNumber - 1.0f),    // bottom left
-                 xPosition,         yPosition + height, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f+0.125f*theta,   0.333f * animationNumber              // top left
-            };
-
-
             renderImage(100.0f, 100.0f, 200.0f, 200.0f, wall);
 
             drawCharacter(mainCharacter);
+            drawVelocityVector(mainCharacter);
 
-            if (GetKeyState(VK_LEFT)<0)
+
+            if (mainCharacter->inAir)
+            {
+                changeAnimation(mainCharacter, 1);
+            }
+            else if (GetKeyState(VK_LEFT)<0)
             {
                 addVelocity(mainCharacter, -10.0f, 0.0f);
                 mainCharacter -> turnedAround = true;
+                changeAnimation(mainCharacter, 2);
+
             }
-            if (GetKeyState(VK_RIGHT)<0)
+            else if(GetKeyState(VK_RIGHT)<0)
             {
                 addVelocity(mainCharacter, 10.0f, 0.0f);
                 mainCharacter -> turnedAround = false;
+                changeAnimation(mainCharacter, 2);
             }
-            if (GetKeyState(VK_UP)<0)
+            else
             {
-                addVelocity(mainCharacter, 0.0f, 10.0f);
+                changeAnimation(mainCharacter, 3);
             }
-            if (GetKeyState(VK_DOWN)<0)
+
+            if (GetKeyState(VK_UP)<0 && mainCharacter->inAir != true)
             {
-                addVelocity(mainCharacter, 0.0f, -10.0f);
+                addVelocity(mainCharacter, 0.0f, 70.0f);
+                mainCharacter -> inAir = true;
+            }
+            if (GetKeyState(VK_DOWN)<0 && mainCharacter->inAir)
+            {
+                addVelocity(mainCharacter, 0.0f, -100.0f);
             }
 
             SwapBuffers(hDC);
