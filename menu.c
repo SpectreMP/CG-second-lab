@@ -40,7 +40,7 @@ int Menu_AddButton(char *name, float x, float y, float width, float height, floa
     btn[btnCnt-1].isDone = 0;
 
     TBtn *b = btn + btnCnt - 1;
-    b->num_quads = stb_easy_font_print(0,0, name, 0, b->buffer, sizeof(b->buffer));
+    b->num_quads = stb_easy_font_print(0,0, name, NULL, b->buffer, sizeof(b->buffer));
     b->textPosX = x + (width - stb_easy_font_width(name) * textScale) / 2.0;
     b->textPosY = y + (height - stb_easy_font_height(name) * textScale) / 2.0;;
     b->textPosY += textScale * 2;
@@ -56,14 +56,14 @@ void ShowButton(int buttonId)
     TBtn btn1 = btn[buttonId];
     glVertexPointer(2, GL_FLOAT, 0, btn1.vert);
     glEnableClientState(GL_VERTEX_ARRAY);
-        if(btn1.isDown) glColor3f(0.2, 1, 0.2);
-        else if (btn1.isHower) glColor3f(0.8, 0.8, 1);
-        else glColor3f(0.6,0.6,0.8);
+        if(btn1.isDown) glColor3f(0.2f, 1.0f, 0.2f);
+        else if (btn1.isHower) glColor3f(0.8f, 0.8f, 1);
+        else glColor3f(0.6f,0.6f,0.8f);
         glDrawArrays(GL_TRIANGLE_FAN,0,4);
 
-        glColor3f(1,1,1);
+        glColor3f(1.0f, 1.0f, 1.0f);
         glLineWidth(1);
-        glDrawArrays(GL_LINE_LOOP,0,4);
+        glDrawArrays(GL_LINE_LOOP, 0,4);
     glDisableClientState(GL_VERTEX_ARRAY);
 
     glPushMatrix();
@@ -71,7 +71,7 @@ void ShowButton(int buttonId)
         glTranslatef(btn1.textPosX, btn1.textPosY, 0);
         glScalef(btn1.textScale, btn1.textScale, 1);
         glEnableClientState(GL_VERTEX_ARRAY);
-            glVertexPointer(2, GL_FLOAT, 16, btn1.buffer);
+            glVertexPointer(2, GL_FLOAT, 4*sizeof(float), btn1.buffer);
             glDrawArrays(GL_QUADS, 0, btn1.num_quads*4);
         glDisableClientState(GL_VERTEX_ARRAY);
         glColor3f(1.0f, 1.0f, 1.0f);

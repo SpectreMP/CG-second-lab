@@ -3,6 +3,7 @@
 #include "menu.h"
 #include "texturing.h"
 #include "character.h"
+#include "collision.h"
 
 float ADD_FRAMETIME = 50.0f;
 int SCENE = 0;
@@ -12,6 +13,7 @@ void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
 
 void changeScene();
+void exitProgram();
 
 
 int WINAPI WinMain(HINSTANCE hInstance,
@@ -71,7 +73,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
     //Инициализация кнопок
     Menu_AddButton("Start", 100, 100, 400, 100, 8, changeScene);
-    Menu_AddButton("Quit", 100, 250, 400, 100, 8, PostQuitMessage);         //По хорошему так завершать программу не стоит, но я не хочу писать отдельную функцию, только для того чтобы завершить программу с кодом 0
+    Menu_AddButton("Quit", 100, 250, 400, 100, 8, exitProgram);
 
     //Инициализация текстур
     unsigned int spriteSheet, background, wall;
@@ -79,8 +81,20 @@ int WINAPI WinMain(HINSTANCE hInstance,
     createTexture("src/background.png", &background);
     createTexture("src/brick.png", &wall);
 
+    //Инициализация матрицы коллизий
+    float collisionMatrix[] =
+    {
+        // x1   // x2   // y1   // y2
+        600.0f,  800.0f,  200.0f, 350.0f, //Нижний ящик
+        600.0f,  800.0f,  550.0f, 650.0f, //Верхний ящик
+        200.0f,  300.0f,  500.0f, 550.0f, //Верхний ящик2
+       -100.0f,  1200.0f, 0.0f,   200.0f, //Пол
+       -100.0f,  0.0f,    0.0f,   800.0f, //Левая граница
+        1020.0f, 1100.0f, 0.0f,   800.0f  //Правая граница
+    };
+
     //Инициализация персонажей
-    Character* mainCharacter = createCharacter(400.0f, 400.0f, spriteSheet);
+    Character* mainCharacter = createCharacter(400.0f, 400.0f, spriteSheet, 3, 8);
 
 
     /* program main loop */
@@ -109,15 +123,22 @@ int WINAPI WinMain(HINSTANCE hInstance,
             switch(SCENE)
             {
             case 0:
-                Menu_ShowMenu();
+                Menu_ShowMenu();                //Отрисовать меню
                 break;
             case 1:
-                renderImage(100.0f, 100.0f, 200.0f, 200.0f, wall);
+                physics(mainCharacter);         //Обработать физику
+                playerControl(mainCharacter);   //Обработать управление
+                collision(mainCharacter, collisionMatrix, sizeof(collisionMatrix)); //Обработать коллизии
 
-                drawCharacter(mainCharacter);
-                drawVelocityVector(mainCharacter);
+                drawCharacter(mainCharacter);   //Отрисовать персонажа
 
-                playerControl(mainCharacter);
+                //Нет, я не буду извиняться за абсолютно ублюдошную ориентацию в пространстве, делал бы сначала, сделал бы по другому
+                renderImage(200.0f, 150.0f, 600.0f, 768.0f - 200.0f - 150.0f, wall);
+                renderImage(200.0f, 100.0f, 600.0f, 768.0f - 550.0f - 100.0f, wall);
+                renderImage(100.0f, 50.0f,  200.0f, 768.0f - 500.0f - 50.0f,  wall);
+
+                //drawVelocityVector(mainCharacter); //Отрисовать вектор скорости персонажа (дебаг)
+
                 break;
             }
 
@@ -227,5 +248,10 @@ void changeScene()          //Совсем маленький костыль, жесть
     {
         SCENE = 1;
     }
+}
+
+void exitProgram()
+{
+    PostQuitMessage(0);
 }
 

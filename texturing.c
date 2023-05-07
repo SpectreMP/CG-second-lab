@@ -68,7 +68,9 @@ void renderImage (float width, float height, float xPosition, float yPosition, u
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
     glPopMatrix();
-    glDisable(GL_ALPHA_TEST);
+    glDisable(GL_ALPHA_TEST);                   //Выключаем всё, что включили
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
 }
 
 //Отрендерить изображение в соответствии с указанной матрицей вершин, та же функция что и выше, но позволяет гибче настроить рендер изображения (для анимации, например)
@@ -93,6 +95,8 @@ void renderImageFromMatrix (float vertices[], unsigned int texture)
 
     glPopMatrix();
     glDisable(GL_ALPHA_TEST);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
 }
 
 

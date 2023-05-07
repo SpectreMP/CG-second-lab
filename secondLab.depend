@@ -16,12 +16,13 @@
 	<stdio.h>
 	"stb-master/stb_easy_font.h"
 
-1683213514 source:d:\other\cg\cg-second-lab\main.c
+1683495475 source:d:\other\cg\cg-second-lab\main.c
 	<windows.h>
 	<gl/gl.h>
 	"menu.h"
 	"texturing.h"
 	"character.h"
+	"collision.h"
 
 1679875298 d:\other\cg\cg-second-lab\stb-master\stb_easy_font.h
 	<stdlib.h>
@@ -72,17 +73,16 @@
 
 1683212628 d:\other\cg\cg-second-lab\menu.h
 
-1683116150 d:\other\cg\cg-second-lab\texturing.h
-	"texturing.h"
+1683466451 d:\other\cg\cg-second-lab\texturing.h
 
-1683212480 source:d:\other\cg\cg-second-lab\menu.c
+1683495008 source:d:\other\cg\cg-second-lab\menu.c
 	<gl/gl.h>
 	<stdio.h>
 	<stdlib.h>
 	"stb-master/stb_easy_font.h"
 	"menu.h"
 
-1683115989 source:d:\other\cg\cg-second-lab\texturing.c
+1683492859 source:d:\other\cg\cg-second-lab\texturing.c
 	"texturing.h"
 	<gl/gl.h>
 	<stdio.h>
@@ -108,12 +108,22 @@
 
 1683091878 source:d:\other\cg\cg-second-lab\animation.c
 
-1683212752 source:d:\other\cg\cg-second-lab\character.c
+1683491651 source:d:\other\cg\cg-second-lab\character.c
 	<GL/gl.h>
 	"character.h"
 	"texturing.h"
 	<stdbool.h>
 
-1683209114 d:\other\cg\cg-second-lab\character.h
+1683490069 d:\other\cg\cg-second-lab\character.h
 	<stdbool.h>
+
+1683495688 source:d:\other\cg\cg-second-lab\collision.c
+	"collision.h"
+	<GL/gl.h>
+	<stdbool.h>
+	"character.h"
+
+1683491260 d:\other\cg\cg-second-lab\collision.h
+	<stdbool.h>
+	"character.h"
 

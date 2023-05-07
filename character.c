@@ -4,9 +4,8 @@
 #include <stdbool.h>
 
 int WINDOW_HEIGHT = 768; //Самый большой костыль всех времен (я не могу развернуть ориентацию пространства для отрисовки конкретного персонажа)
-float FLOOR_LEVEL = 200; //Костыль поменьше
 
-Character* createCharacter(float x, float y, unsigned int sprite)
+Character* createCharacter(float x, float y, unsigned int sprite, int spriteAnimations, int spriteFrames)
 {
     Character* ch = malloc(sizeof(Character));
 
@@ -16,10 +15,12 @@ Character* createCharacter(float x, float y, unsigned int sprite)
     ch->height = 100.0f;
 
     ch->spritesheet = sprite;
+    ch->animationCount = spriteAnimations;
+    ch->frameCount = spriteFrames;
 
     ch->turnedAround = false;
     ch->inAir = true;
-    ch->animation = 2;
+    ch->animation = 0;
     ch->frame = 0;
     ch->velocityX = 0;
     ch->velocityY = 0;
@@ -27,15 +28,17 @@ Character* createCharacter(float x, float y, unsigned int sprite)
 
 void drawCharacter(Character *ch)
 {
-    float positionXTransformed = ch -> positionX - ch -> width * 0.5f;
-    float positionYTransformed = WINDOW_HEIGHT - ch -> positionY - ch -> height;
+    float positionXTransformed = ch->positionX - ch->width * 0.5f;
+    float positionYTransformed = WINDOW_HEIGHT - ch->positionY - ch->height;
+    float frameWidth = 1.0f / ch->frameCount;
+    float frameHeight = 1.0f / ch->animationCount;
 
     float vertices[] = {
          // positions                                                                 // colors           // texture coords
-         positionXTransformed + ch->width, positionYTransformed + ch->height, 0.0f,   1.0f, 1.0f, 1.0f,   0.125f + 0.125f * ch->frame, 0.33333f * ch->animation,         // top right
-         positionXTransformed + ch->width, positionYTransformed,              0.0f,   1.0f, 1.0f, 1.0f,   0.125 + 0.125f * ch->frame,  0.33333f * (ch->animation - 1),   // bottom right
-         positionXTransformed,             positionYTransformed,              0.0f,   1.0f, 1.0f, 1.0f,   0.0f + 0.125f * ch->frame,   0.33333f * (ch->animation - 1),   // bottom left
-         positionXTransformed,             positionYTransformed + ch->height, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f + 0.125f * ch->frame,   0.33333f * ch->animation          // top left
+         positionXTransformed + ch->width, positionYTransformed + ch->height, 0.0f,   1.0f, 1.0f, 1.0f,   frameWidth + frameWidth * ch->frame, frameHeight * ch->animation,         // top right
+         positionXTransformed + ch->width, positionYTransformed,              0.0f,   1.0f, 1.0f, 1.0f,   frameWidth + frameWidth * ch->frame, frameHeight * (ch->animation - 1),   // bottom right
+         positionXTransformed,             positionYTransformed,              0.0f,   1.0f, 1.0f, 1.0f,   0.0f + frameWidth * ch->frame,       frameHeight * (ch->animation - 1),   // bottom left
+         positionXTransformed,             positionYTransformed + ch->height, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f + frameWidth * ch->frame,       frameHeight * ch->animation          // top left
     };
 
     if (ch->turnedAround)                                   //Отражаем изображение по вертикали
@@ -44,7 +47,7 @@ void drawCharacter(Character *ch)
         vertices[16] = vertices [24] += ch -> width;
     }
 
-    physics(ch);                                            //Обрабатываем физику
+    //physics(ch);                                          //Обрабатываем физику
 
     renderImageFromMatrix(vertices, ch->spritesheet);       //Рендерим персонажа в соответствии с матрицей вершин выше
 
@@ -68,11 +71,11 @@ void addVelocity(Character *ch, float horizontal, float vertical)
 
 void physics(Character *ch)                 //Физичность? Персонажа
 {
-    if (ch->inAir)                          //Ускорение свободного падения (Игра происходит в вакууме, канон)
+    if (ch->velocityY < 0)
     {
-        ch->velocityY -= 9.8f;
+        ch->inAir = true;
     }
-    else
+    if (ch->inAir == false)
     {
         ch->velocityX *= 0.8f;              //Инертность?
         ch->velocityY *= 0.8f;
@@ -81,13 +84,7 @@ void physics(Character *ch)                 //Физичность? Персонажа
     ch->positionX += ch->velocityX;         //Преобразуем скорость в изменение координат
     ch->positionY += ch->velocityY;
 
-
-    if (ch->inAir && ch->positionY + ch->velocityY<FLOOR_LEVEL) //Колизия с полом?
-    {
-        ch->velocityY = 0;
-        ch->inAir = false;
-        ch->positionY = FLOOR_LEVEL;
-    }
+    ch->velocityY -= 9.8f;                  //Ускорение свободного падения (Игра происходит в вакууме, канон)
 }
 
 void drawVelocityVector (Character *ch)     //Отрисовать вектор скорости персонажа
@@ -95,7 +92,7 @@ void drawVelocityVector (Character *ch)     //Отрисовать вектор скорости персона
     glPushMatrix();
         glBegin(GL_LINES);
             glVertex2f(ch -> positionX, WINDOW_HEIGHT - ch -> positionY);
-            glVertex2f(ch -> positionX + ch -> velocityX, WINDOW_HEIGHT - ch -> positionY - ch -> velocityY);
+            glVertex2f(ch -> positionX + ch -> velocityX, WINDOW_HEIGHT - (ch -> positionY + ch -> velocityY));
         glEnd();
     glPopMatrix();
 }

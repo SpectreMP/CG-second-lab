@@ -16,6 +16,8 @@ typedef struct
     bool inAir;
 
     unsigned int spritesheet;
+    int animationCount;
+    int frameCount;
 
     int animation;
     int frame;
@@ -25,9 +27,12 @@ typedef struct
 
 } Character;
 
-Character* createCharacter(float x, float y, unsigned int sprite);
+Character* createCharacter(float x, float y, unsigned int sprite, int spriteAnimations, int spriteFrames);
 void drawCharacter(Character *ch);
 void changeAnimation (Character *ch, int animationNumber);
 void addVelocity(Character *ch, float horizontal, float vertical);
+void physics(Character *ch);
+void drawVelocityVector (Character *ch);
+void playerControl (Character *ch);
 
 #endif CHARACTER_H
