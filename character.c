@@ -47,8 +47,6 @@ void drawCharacter(Character *ch)
         vertices[16] = vertices [24] += ch -> width;
     }
 
-    //physics(ch);                                          //Обрабатываем физику
-
     renderImageFromMatrix(vertices, ch->spritesheet);       //Рендерим персонажа в соответствии с матрицей вершин выше
 
     ch->frame += 1;                                         //Переключаем кадр анимации на следующий
@@ -128,6 +126,6 @@ void playerControl (Character *ch)          //Управление персонажем (как бы я хо
     }
     if (GetKeyState(VK_DOWN)<0 && ch->inAir)
     {
-        addVelocity(ch, 0.0f, -100.0f);
+        addVelocity(ch, 0.0f, -40.0f);
     }
 }

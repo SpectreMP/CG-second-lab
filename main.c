@@ -79,22 +79,21 @@ int WINAPI WinMain(HINSTANCE hInstance,
     unsigned int spriteSheet, background, wall;
     createTexture("src/spritesheet.png", &spriteSheet);
     createTexture("src/background.png", &background);
-    createTexture("src/brick.png", &wall);
 
     //Инициализация матрицы коллизий
     float collisionMatrix[] =
     {
         // x1   // x2   // y1   // y2
-        600.0f,  800.0f,  200.0f, 350.0f, //Нижний ящик
-        600.0f,  800.0f,  550.0f, 650.0f, //Верхний ящик
-        200.0f,  300.0f,  500.0f, 550.0f, //Верхний ящик2
-       -100.0f,  1200.0f, 0.0f,   200.0f, //Пол
-       -100.0f,  0.0f,    0.0f,   800.0f, //Левая граница
+        880.0f,  1024.0f, 230.0f, 330.0f, //Обломок
+        0.0f,    700.0f,  400.0f, 500.0f, //Верхний ярус
+       -100.0f,  1200.0f, 0.0f,   150.0f, //Пол
+       -200.0f,  0.0f,    0.0f,   800.0f, //Левая граница
         1020.0f, 1100.0f, 0.0f,   800.0f  //Правая граница
     };
 
     //Инициализация персонажей
-    Character* mainCharacter = createCharacter(400.0f, 400.0f, spriteSheet, 3, 8);
+    Character* mainCharacter = createCharacter(-20.0f, 300.0f, spriteSheet, 3, 8);
+    addVelocity(mainCharacter, 30, 0);                                              //Крутое появление из за края экрана!
 
 
     /* program main loop */
@@ -131,11 +130,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
                 collision(mainCharacter, collisionMatrix, sizeof(collisionMatrix)); //Обработать коллизии
 
                 drawCharacter(mainCharacter);   //Отрисовать персонажа
-
-                //Нет, я не буду извиняться за абсолютно ублюдошную ориентацию в пространстве, делал бы сначала, сделал бы по другому
-                renderImage(200.0f, 150.0f, 600.0f, 768.0f - 200.0f - 150.0f, wall);
-                renderImage(200.0f, 100.0f, 600.0f, 768.0f - 550.0f - 100.0f, wall);
-                renderImage(100.0f, 50.0f,  200.0f, 768.0f - 500.0f - 50.0f,  wall);
 
                 //drawVelocityVector(mainCharacter); //Отрисовать вектор скорости персонажа (дебаг)
 

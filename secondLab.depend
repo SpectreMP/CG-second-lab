@@ -16,7 +16,7 @@
 	<stdio.h>
 	"stb-master/stb_easy_font.h"
 
-1683495475 source:d:\other\cg\cg-second-lab\main.c
+1683560766 source:d:\other\cg\cg-second-lab\main.c
 	<windows.h>
 	<gl/gl.h>
 	"menu.h"
@@ -75,7 +75,7 @@
 
 1683466451 d:\other\cg\cg-second-lab\texturing.h
 
-1683495008 source:d:\other\cg\cg-second-lab\menu.c
+1683548972 source:d:\other\cg\cg-second-lab\menu.c
 	<gl/gl.h>
 	<stdio.h>
 	<stdlib.h>
@@ -108,7 +108,7 @@
 
 1683091878 source:d:\other\cg\cg-second-lab\animation.c
 
-1683491651 source:d:\other\cg\cg-second-lab\character.c
+1683562889 source:d:\other\cg\cg-second-lab\character.c
 	<GL/gl.h>
 	"character.h"
 	"texturing.h"
@@ -117,7 +117,7 @@
 1683490069 d:\other\cg\cg-second-lab\character.h
 	<stdbool.h>
 
-1683495688 source:d:\other\cg\cg-second-lab\collision.c
+1683560459 source:d:\other\cg\cg-second-lab\collision.c
 	"collision.h"
 	<GL/gl.h>
 	<stdbool.h>
